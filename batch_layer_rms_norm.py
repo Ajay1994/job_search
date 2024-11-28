@@ -33,7 +33,10 @@ class CustomRMSNorm(nn.Module):
     def _norm(self, x: torch.Tensor):
         # (B, Seq_Len, Dim) * (B, Seq_Len, 1) = (B, Seq_Len, Dim)
         # rsqrt: 1 / sqrt(x) 
-        return x * torch.rsqrt(x.pow(2).mean(dim = -1, keepdim = True) + self.eps)
+        return x * torch.rsqrt(
+            x.pow(2).mean(dim = -1, keepdim = True) 
+            + self.eps
+            )
     
     def forward(self, x: torch.Tensor):
         # x.shape = [B, seq_len, dim] 
